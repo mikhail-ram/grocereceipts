@@ -33,7 +33,7 @@ export default function RecipeDetailsScreen({
     name: "Spicy Thai Basil Chicken",
     prepTime: "30 minutes",
     servings: 4,
-    flavorProfile: ["Spicy", "Savory", "Aromatic"],
+    flavorProfile: ["Spicy", "Savory"],
     description:
       "A quick and flavorful Thai dish that combines tender chicken with fragrant basil and chili. Perfect for a weeknight dinner that packs a punch!",
     ingredients: [
@@ -62,7 +62,7 @@ export default function RecipeDetailsScreen({
 
   return (
     <ScrollView className="p-6" contentContainerStyle={{ paddingBottom: 24 }}>
-      <Image source={recipeImage} className="object-cover w-full h-64" />
+      <Image source={recipeImage} className="object-cover w-full h-48" />
       <Text className="text-3xl font-bold">{recipe.name}</Text>
       <Text className="text-lg mt-2">{recipe.description}</Text>
       <View className="">
