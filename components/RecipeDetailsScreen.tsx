@@ -14,13 +14,8 @@ type RecipeDetailsScreenProps = NativeStackScreenProps<
 >;
 
 const iconLibraries = [AntDesign, Feather, MaterialCommunityIcons];
-iconLibraries.forEach((IconLibrary) => {
-  cssInterop(IconLibrary, {
-    className: {
-      target: "style",
-      nativeStyleToProp: { height: true, width: true, size: true },
-    },
-  });
+iconLibraries.forEach((iconLibrary) => {
+  cssInterop(iconLibrary, { className: "style" });
 });
 
 export default function RecipeDetailsScreen({
@@ -62,36 +57,31 @@ export default function RecipeDetailsScreen({
 
   return (
     <ScrollView className="p-6" contentContainerStyle={{ paddingBottom: 24 }}>
-      <Image source={recipeImage} className="object-cover w-full h-48" />
+      <Image source={recipeImage} className="bg-cover h-48 w-full mb-3" />
       <Text className="text-3xl font-bold">{recipe.name}</Text>
       <Text className="text-lg mt-2">{recipe.description}</Text>
-      <View className="">
-        <View className="flex-row justify-between items-center mb-6">
-          {/* Prep Time: Left Aligned */}
-          <View className="flex-row items-center gap-2 flex-none">
+      <View className="my-3">
+        <View className="flex flex-row flex-wrap justify-evenly mb-6 gap-3">
+          <View className="flex flex-row items-center gap-2">
             <AntDesign name="clockcircleo" className="text-muted-foreground" />
             <Text>{recipe.prepTime}</Text>
           </View>
 
-          {/* Servings: Center Aligned */}
-          <View className="flex-1 flex-row justify-center items-center gap-2">
+          <View className="flex flex-row items-center gap-2">
             <Feather name="users" className="text-muted-foreground" />
             <Text>Serves {recipe.servings}</Text>
           </View>
 
-          {/* Flavor Profile: Right Aligned with Wrapping Badges */}
-          <View className="flex-1 flex-row justify-end items-start">
+          <View className="flex flex-row items-center gap-2">
             <MaterialCommunityIcons
               name="silverware-fork-knife"
-              className="text-muted-foreground mt-1"
+              className="text-muted-foreground"
             />
-            <View className="flex-row flex-wrap gap-2 ml-2">
-              {recipe.flavorProfile.map((flavor, index) => (
-                <Badge key={index} variant="secondary" className="flex-none">
-                  <Text>{flavor}</Text>
-                </Badge>
-              ))}
-            </View>
+            {recipe.flavorProfile.map((flavor, index) => (
+              <Badge key={index} variant="secondary" className="flex-none">
+                <Text>{flavor}</Text>
+              </Badge>
+            ))}
           </View>
         </View>
         <View className="mb-6">
