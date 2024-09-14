@@ -31,7 +31,7 @@ export default function RecipeListScreen({
           >
             <Card
               key={i}
-              className="mb-6 flex w-full max-w-lg flex-row justify-stretch rounded-2xl"
+              className="mb-6 flex flex-row justify-stretch rounded-2xl"
             >
               <View className="flex-column flex justify-center">
                 <Image

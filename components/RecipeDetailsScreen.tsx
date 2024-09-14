@@ -56,50 +56,59 @@ export default function RecipeDetailsScreen({
   const recipeImage = require("~/assets/images/recipe-image.png");
 
   return (
-    <ScrollView className="p-6" contentContainerStyle={{ paddingBottom: 24 }}>
-      <Image source={recipeImage} className="bg-cover h-48 w-full mb-3" />
-      <Text className="text-3xl font-bold">{recipe.name}</Text>
-      <Text className="text-lg mt-2">{recipe.description}</Text>
-      <View className="my-3">
-        <View className="flex flex-row flex-wrap justify-evenly mb-6 gap-3">
-          <View className="flex flex-row items-center gap-2">
-            <AntDesign name="clockcircleo" className="text-muted-foreground" />
-            <Text>{recipe.prepTime}</Text>
-          </View>
-
-          <View className="flex flex-row items-center gap-2">
-            <Feather name="users" className="text-muted-foreground" />
-            <Text>Serves {recipe.servings}</Text>
-          </View>
-
-          <View className="flex flex-row items-center gap-2">
-            <MaterialCommunityIcons
-              name="silverware-fork-knife"
-              className="text-muted-foreground"
-            />
-            {recipe.flavorProfile.map((flavor, index) => (
-              <Badge key={index} variant="secondary" className="flex-none">
-                <Text>{flavor}</Text>
-              </Badge>
-            ))}
-          </View>
-        </View>
-        <View className="mb-6">
-          <Text className="text-xl font-semibold mb-2">Ingredients</Text>
-          <View className="pl-5 space-y-1">
-            {recipe.ingredients.map((ingredient, index) => (
-              <Text key={index}>• {ingredient}</Text>
-            ))}
-          </View>
-        </View>
+    <ScrollView className="p-6" contentContainerStyle={{ paddingBottom: 48 }}>
+      <View className="max-w-xl w-full mx-auto">
+        <Image
+          source={recipeImage}
+          className="bg-cover rounded-lg mb-3"
+          style={{ width: "100%", height: 300 }}
+        />
+        <Text className="text-3xl font-bold">{recipe.name}</Text>
+        <Text className="text-lg mt-2">{recipe.description}</Text>
         <View>
-          <Text className="text-xl font-semibold mb-2">Instructions</Text>
-          <View className="pl-5 space-y-2">
-            {recipe.instructions.map((step, index) => (
-              <Text key={index}>
-                {index + 1}. {step}
-              </Text>
-            ))}
+          <View className="my-4 flex flex-row flex-wrap justify-between mb-6 gap-3">
+            <View className="flex flex-row items-center gap-2">
+              <AntDesign
+                name="clockcircleo"
+                className="text-muted-foreground"
+              />
+              <Text>{recipe.prepTime}</Text>
+            </View>
+
+            <View className="flex flex-row items-center gap-2">
+              <Feather name="users" className="text-muted-foreground" />
+              <Text>Serves {recipe.servings}</Text>
+            </View>
+
+            <View className="flex flex-row items-center gap-2">
+              <MaterialCommunityIcons
+                name="silverware-fork-knife"
+                className="text-muted-foreground"
+              />
+              {recipe.flavorProfile.map((flavor, index) => (
+                <Badge key={index} variant="secondary" className="flex-none">
+                  <Text>{flavor}</Text>
+                </Badge>
+              ))}
+            </View>
+          </View>
+          <View className="mb-6">
+            <Text className="text-xl font-semibold mb-2">Ingredients</Text>
+            <View className="pl-5 space-y-1">
+              {recipe.ingredients.map((ingredient, index) => (
+                <Text key={index}>• {ingredient}</Text>
+              ))}
+            </View>
+          </View>
+          <View>
+            <Text className="text-xl font-semibold mb-2">Instructions</Text>
+            <View className="pl-5 space-y-2">
+              {recipe.instructions.map((step, index) => (
+                <Text key={index}>
+                  {index + 1}. {step}
+                </Text>
+              ))}
+            </View>
           </View>
         </View>
       </View>
