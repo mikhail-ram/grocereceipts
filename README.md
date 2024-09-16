@@ -1,2 +1,2 @@
 # Grocereceipts
-Object Recognition and Recipe Generation Using YOLO and Large Language Models
+Object Recognition and Recipe Generation Using YOLO and Large Language Models.
