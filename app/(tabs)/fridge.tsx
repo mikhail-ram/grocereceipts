@@ -1,115 +1,97 @@
 import * as React from "react";
-import { View } from "react-native";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  LayoutAnimationConfig,
-} from "react-native-reanimated";
-import { Info } from "~/lib/icons/Info";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Progress } from "~/components/ui/progress";
 import { Text } from "~/components/ui/text";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Image, View, ScrollView, TouchableOpacity } from "react-native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type { FridgeStackParamList } from "~/lib/types";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-const GITHUB_AVATAR_URI =
-  "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
+type FridgeListScreenProps = NativeStackScreenProps<
+  FridgeStackParamList,
+  "Fridge"
+>;
+const FridgeStack = createNativeStackNavigator<FridgeStackParamList>();
+
+function FridgeListScreen({ navigation }: FridgeListScreenProps) {
+  const tabBarHeight = useBottomTabBarHeight();
+  const itemImage = require("~/assets/images/item-image.png");
+
+  return (
+    <ScrollView className="flex-1 p-6">
+      <View
+        className="mb-6 items-center"
+        style={{ marginBottom: tabBarHeight / 2 }}
+      >
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <TouchableOpacity
+            key={i}
+            onPress={() => navigation.navigate("Details", { itemId: i })}
+          >
+            <Card
+              key={i}
+              className="max-w-xl w-full mb-6 flex flex-row justify-stretch rounded-2xl"
+            >
+              <Image
+                source={itemImage}
+                style={{ width: 150, height: "100%" }}
+                className="rounded-l-2xl"
+                resizeMode="cover"
+              />
+              <View className="flex-1">
+                <CardHeader>
+                  <CardTitle className="text-lg">Item {i}</CardTitle>
+                  <CardDescription>Expires 17/09/24</CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                  <Text className="text-muted-foreground text-sm">
+                    Food item {i} description (calories, nutrition breakdown...)
+                  </Text>
+                </CardContent>
+              </View>
+            </Card>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
+
+type FridgeDetailsScreenProps = NativeStackScreenProps<
+  FridgeStackParamList,
+  "Details"
+>;
+
+function FridgeDetailsScreen({ route, navigation }: FridgeDetailsScreenProps) {
+  const { itemId } = route.params;
+
+  const itemImage = require("~/assets/images/item-image.png");
+
+  return (
+    <ScrollView className="p-6" contentContainerStyle={{ paddingBottom: 48 }}>
+      <View className="max-w-xl w-full mx-auto">
+        <Image
+          source={itemImage}
+          className="bg-cover rounded-lg mb-3"
+          style={{ width: "100%", height: 300 }}
+        />
+        <Text className="text-3xl font-bold">Item {itemId}</Text>
+      </View>
+    </ScrollView>
+  );
+}
 
 export default function FridgeStackScreen() {
-  const [progress, setProgress] = React.useState(78);
-
-  function updateProgressValue() {
-    setProgress(Math.floor(Math.random() * 100));
-  }
   return (
-    <View className="bg-secondary/30 flex-1 items-center justify-center gap-5 p-6">
-      <Card className="w-full max-w-sm rounded-2xl p-6">
-        <CardHeader className="items-center">
-          <Avatar alt="Rick Sanchez's Avatar" className="h-24 w-24">
-            <AvatarImage source={{ uri: GITHUB_AVATAR_URI }} />
-            <AvatarFallback>
-              <Text>RS</Text>
-            </AvatarFallback>
-          </Avatar>
-          <View className="p-3" />
-          <CardTitle className="pb-2 text-center">Mikhail Ram</CardTitle>
-          <View className="flex-row">
-            <CardDescription className="text-base font-semibold">
-              Scientist
-            </CardDescription>
-            <Tooltip delayDuration={150}>
-              <TooltipTrigger className="px-2 pb-0.5 active:opacity-50">
-                <Info
-                  size={14}
-                  strokeWidth={2.5}
-                  className="text-foreground/70 h-4 w-4"
-                />
-              </TooltipTrigger>
-              <TooltipContent className="px-4 py-2 shadow">
-                <Text className="native:text-lg">Freelance</Text>
-              </TooltipContent>
-            </Tooltip>
-          </View>
-        </CardHeader>
-        <CardContent>
-          <View className="flex-row justify-around gap-3">
-            <View className="items-center">
-              <Text className="text-muted-foreground text-sm">Dimension</Text>
-              <Text className="text-xl font-semibold">C-137</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-muted-foreground text-sm">Age</Text>
-              <Text className="text-xl font-semibold">70</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-muted-foreground text-sm">Species</Text>
-              <Text className="text-xl font-semibold">Human</Text>
-            </View>
-          </View>
-        </CardContent>
-        <CardFooter className="flex-col gap-3 pb-0">
-          <View className="flex-row items-center overflow-hidden">
-            <Text className="text-muted-foreground text-sm">Productivity:</Text>
-            <LayoutAnimationConfig skipEntering>
-              <Animated.View
-                key={progress}
-                entering={FadeInUp}
-                exiting={FadeOutDown}
-                className="w-11 items-center"
-              >
-                <Text className="text-sm font-bold text-sky-600">
-                  {progress}%
-                </Text>
-              </Animated.View>
-            </LayoutAnimationConfig>
-          </View>
-          <Progress
-            value={progress}
-            className="h-2"
-            indicatorClassName="bg-sky-600"
-          />
-          <View />
-          <Button
-            variant="outline"
-            className="shadow-foreground/5 shadow"
-            onPress={updateProgressValue}
-          >
-            <Text>Update</Text>
-          </Button>
-        </CardFooter>
-      </Card>
-    </View>
+    <FridgeStack.Navigator>
+      <FridgeStack.Screen name="Fridge" component={FridgeListScreen} />
+      <FridgeStack.Screen name="Details" component={FridgeDetailsScreen} />
+    </FridgeStack.Navigator>
   );
 }

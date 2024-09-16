@@ -10,6 +10,7 @@ import { Image, View, ScrollView, TouchableOpacity } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "~/lib/types";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+
 type RecipeListScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function RecipeListScreen({
@@ -31,16 +32,15 @@ export default function RecipeListScreen({
           >
             <Card
               key={i}
-              className="mb-6 flex flex-row justify-stretch rounded-2xl"
+              className="max-w-xl w-full mb-6 flex flex-row justify-stretch rounded-2xl"
             >
-              <View className="flex-column flex justify-center">
-                <Image
-                  source={recipeImage}
-                  style={{ width: 150, height: 150 }}
-                  className="rounded-l-2xl"
-                />
-              </View>
-              <View>
+              <Image
+                source={recipeImage}
+                style={{ width: 150, height: "100%" }}
+                className="rounded-l-2xl"
+                resizeMode="cover"
+              />
+              <View className="flex-1">
                 <CardHeader>
                   <CardTitle className="text-lg">Recipe {i}</CardTitle>
                   <CardDescription>1 hour</CardDescription>
